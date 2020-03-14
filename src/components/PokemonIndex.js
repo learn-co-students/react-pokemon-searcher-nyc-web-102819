@@ -13,16 +13,7 @@ class PokemonPage extends React.Component {
   }
   
   componentDidMount(){
-    fetch('http://localhost:3000/pokemon')
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    this.setState({
-      pokemon: data, 
-      isLoaded: true
-    })
-  });
+    this.fetchPokemon()
   }
 
   handleChange(e){
@@ -31,13 +22,26 @@ class PokemonPage extends React.Component {
     })
   }
 
+  fetchPokemon = () => {
+    fetch('http://localhost:3000/pokemon')
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        this.setState({
+          pokemon: data, 
+          isLoaded: true
+        })
+      });
+  }
+
   
   render() {
     return (
       <Container>
         <h1>Pokemon Searcher</h1>
         <br />
-        <PokemonForm />
+        <PokemonForm fetchPokemon={this.fetchPokemon}/>
         <br />
         <Search onChange={(e) => this.handleChange(e)} />
         <br />
